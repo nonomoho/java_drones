@@ -11,4 +11,28 @@ public class Colis {
         this.destination = destination;
         this.poids = poids;
     }
+
+    public String getNomColis() {
+        return nomColis;
+    }
+
+    public void setNomColis(String nomColis) {
+        this.nomColis = nomColis;
+    }
+
+    public Point getDestination() {
+        return destination;
+    }
+
+    public void setDestination(Point destination) {
+        this.destination = destination;
+    }
+
+    public int getPoids() {
+        return poids;
+    }
+
+    public void setPoids(int poids) {
+        this.poids = poids;
+    }
 }

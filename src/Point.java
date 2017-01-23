@@ -85,11 +85,5 @@ public class Point {
         return pRetour;
     }
 
-    public Point deplacerDrone(Point pDest,int nbDeplacement){
-        Point pointEnCours = this;
-        for (int i = 0; i < nbDeplacement; i++) {
-            pointEnCours = pointEnCours.meilleurPoint(pDest);
-        }
-        return pointEnCours;
-    }
+
 }

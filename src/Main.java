@@ -4,10 +4,9 @@
 public class Main {
 
     public static void main(String[] args) {
-        Point p1 = new Point(4,5);
-        System.out.println("tutu");
-        Point p2 = new Point(5,5);
-        Point p3 = p1.meilleurPoint(p2);
+        Point p1 = new Point(2,2);
+        Point p2 = new Point(12,5);
+        Point p3 = p1.deplacerDrone(p2, 4);
         System.out.println(p3.getCoordonneeX());
         System.out.println(p3.getCoordonneeY());
     }

@@ -2,8 +2,11 @@
  * Created by arnaudfreismuth on 18/01/2017.
  */
 public class DronesReparation extends DronesTerrestres {
-    public DronesReparation(String nom, int vitesse, double consommation, double batterie, double charge, int distanceMax, Point position, Colis colis) {
-        super(nom, vitesse, consommation, batterie, charge, distanceMax, position, colis);
+    private boolean chargePossible;
+
+    public DronesReparation(String nom) {
+        super(nom, 5, 0.2, 100, 1, 500, new Point(0,0), null);
+        this.chargePossible = false;
     }
 
     public void rechargerDrone(Drones droneACharger) {

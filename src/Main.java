@@ -4,12 +4,12 @@
 public class Main {
 
     public static void main(String[] args) {
-        Point p1 = new Point(2, 2);
-        Point p2 = new Point(12, 5);
+        Point p1 = new Point(1, 0);
+        Point p2 = new Point(-2, -3);
         Colis c1 = new Colis("colis1", p2, 30);
 
-        DronesReconnaissanceTerrestre alpha = new DronesReconnaissanceTerrestre("Alpha", 3, 1, 100, 100, 20, p1, c1);
-
+        DronesReparation alpha = new DronesReparation("Alpha");
+        alpha.setPosition(p1);
         alpha.chargerDrone(c1);
 
         Point p3 = alpha.deplacerDrone(c1.getDestination(), alpha.getVitesse());

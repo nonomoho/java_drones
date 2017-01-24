@@ -2,7 +2,7 @@
  * Created by arnaudfreismuth on 18/01/2017.
  */
 public class DronesTransportVolant extends DronesVolants{
-    public DronesTransportVolant(String nom, int vitesse, double consommation, double batterie, double charge, int distanceMax, Point position, Colis colis, boolean enVol) {
-        super(nom, vitesse, consommation, batterie, charge, distanceMax, position, colis, enVol);
+    public DronesTransportVolant(String nom) {
+        super(nom, 3, 1.5, 100, 20, 100, new Point(0,0), null, false);
     }
 }

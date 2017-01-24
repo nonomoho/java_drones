@@ -7,8 +7,8 @@ abstract public class Drones {
     private double consommation; //% perdu par déplacement
     private double batterie; //en % De 0 à 100
     private double charge; //le poid maximal que peut supporter le drone
-    private int distanceMax;
-    private Point position;
+    private int distanceMax; //Par rapport au point central
+    private Point position; // La position du drone
     private Colis colis; //null si il n'y en a pas
 
     public Drones(String nom, int vitesse, double consommation, double batterie, double charge, int distanceMax, Point position, Colis colis) {
@@ -96,7 +96,14 @@ abstract public class Drones {
         for (int i = 0; i < nbDeplacement; i++) {
             //On vérifie d'abord si on ne se trouve pas hors de la portée du drone
             // à faire
-            pointEnCours = pointEnCours.meilleurPoint(pDest);
+
+            //on vérifie ensuite si la batterie du drone est suffisante pour effectuer le déplacement
+            if (this.getBatterie() - this.getConsommation() >= 0) {
+                pointEnCours = pointEnCours.meilleurPoint(pDest);
+                //le déplacement est effectué, la batterie diminue
+                double etatBatterie = this.getBatterie() - this.getConsommation();
+                this.setBatterie(etatBatterie);
+            }
         }
         return pointEnCours;
     }

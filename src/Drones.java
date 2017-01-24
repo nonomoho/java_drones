@@ -9,9 +9,11 @@ abstract public class Drones {
     private double charge; //le poid maximal que peut supporter le drone
     private int distanceMax; //Par rapport au point central
     private Point position; // La position du drone
+    private Point destination; // La destination du drone
     private Colis colis; //null si il n'y en a pas
+    private int instruction; //numéro de la tâche à accomplir
 
-    public Drones(String nom, int vitesse, double consommation, double batterie, double charge, int distanceMax, Point position, Colis colis) {
+    public Drones(String nom, int vitesse, double consommation, double batterie, double charge, int distanceMax, Point position, Point destination, Colis colis, int instruction) {
         this.nom = nom;
         this.vitesse = vitesse;
         this.consommation = consommation;
@@ -19,7 +21,9 @@ abstract public class Drones {
         this.charge = charge;
         this.distanceMax = distanceMax;
         this.position = position;
+        this.destination = destination;
         this.colis = colis;
+        this.instruction = instruction;
     }
 
     public String getNom() {
@@ -86,56 +90,54 @@ abstract public class Drones {
         this.colis = colis;
     }
 
-    /**
-     * @return pointEnCours : La nouvelle position du drone
-     */
-    public void deplacerDrone() {
-        //Si le drone porte un colis, on réccupère le point de livraison. Sinon il rentre à la base (0,0)
-        Point pDest;
-        if (this.colis != null) {
-            pDest = this.colis.getDestination();
-        } else {
-            pDest = new Point(0, 0);
-        }
+    public Point getDestination() {
+        return destination;
+    }
 
+    public void setDestination(Point destination) {
+        this.destination = destination;
+    }
+
+    public int getInstruction() {
+        return instruction;
+    }
+
+    public void setInstruction(int instruction) {
+        this.instruction = instruction;
+    }
+
+    /**
+     * Déplace le drone
+     */
+    public void seDeplacer() {
+        //Le lieu où doit aller le drone
+        Point pDest = this.getDestination();
         //nbDeplacement correspont à la vitesse (nombre de case par secondes)
         int nbDeplacement = this.vitesse;
 
         Point pointEnCours = this.position;
         for (int i = 0; i < nbDeplacement; i++) {
-            //Si on se trouve à l'endroit de destination du colis, on le livre
-            if(this.colis != null){
-                if (this.position.getCoordonneeX() == this.colis.getDestination().getCoordonneeX() && this.position.getCoordonneeY() == this.colis.getDestination().getCoordonneeY()){
-                    System.out.println("le colis " + this.colis.getNomColis() + " a été livré");
-                    this.colis = null;
-                }
-            }
-            //On vérifie d'abord si on ne se trouve pas hors de la portée du drone
-            // à faire
-
             //on vérifie ensuite si la batterie du drone est suffisante pour effectuer le déplacement
             if (this.getBatterie() - this.getConsommation() >= 0) {
                 pointEnCours = pointEnCours.meilleurPoint(pDest);
                 //le déplacement est effectué, la batterie diminue
-                double etatBatterie = this.getBatterie() - this.getConsommation();
-                this.setBatterie(etatBatterie);
+                //******//double etatBatterie = this.getBatterie() - this.getConsommation();
+                //this.setBatterie(etatBatterie);
             }
+        }
+
+        //Si il se trouve à l'endroit de destination
+        if (pointEnCours.equals(pDest)){
+            if (this.getInstruction() == Instruction.LIVRER_COLIS){
+                System.out.println("le colis " + this.colis.getNomColis() + " a bien été livré");
+            }
+            this.setInstruction(Instruction.RENTRER_A_LA_BASE);
+        }
+
+        //Si il se trouve à la base et devait y retourner, on le met en attente
+        if (pointEnCours.equals(new Point()) && this.getInstruction() == Instruction.RENTRER_A_LA_BASE){
+            this.setInstruction(Instruction.EN_ATTENTE);
         }
         this.position = pointEnCours;
     }
-
-    /**
-     * @param colis : le colis à charger sur le drone
-     *              On vérifie si le drone a une capacité de charge suffisante pour porter le colis
-     */
-    public void chargerDrone(Colis colis) {
-        //on test si le poid du colis est inférieur à la capacité du drone
-        if (colis.getPoids() <= this.getCharge()) {
-            this.setColis(colis);
-        } else {
-            System.out.println("Le colis " + colis.getNomColis() + " est trop lourd pour le drone " + this.getNom());
-        }
-    }
-
-
 }

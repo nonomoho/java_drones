@@ -10,6 +10,11 @@ public class Point {
         this.coordonneeY = coordonneeY;
     }
 
+    public Point() {
+        this.coordonneeX =0;
+        this.coordonneeY =0;
+    }
+
     public int getCoordonneeX() {
         return coordonneeX;
     }
@@ -24,6 +29,17 @@ public class Point {
 
     public void setCoordonneeY(int coordonneeY) {
         this.coordonneeY = coordonneeY;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Point)) return false;
+
+        Point point = (Point) o;
+
+        if (coordonneeX != point.coordonneeX) return false;
+        return coordonneeY == point.coordonneeY;
     }
 
     /**

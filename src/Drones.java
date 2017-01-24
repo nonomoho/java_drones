@@ -87,13 +87,29 @@ abstract public class Drones {
     }
 
     /**
-     * @param pDest         c'est le point de destination du drône
-     * @param nbDeplacement nombre de case que le drone peut parcourir ce tour
      * @return pointEnCours : La nouvelle position du drone
      */
-    public Point deplacerDrone(Point pDest, int nbDeplacement) {
+    public void deplacerDrone() {
+        //Si le drone porte un colis, on réccupère le point de livraison. Sinon il rentre à la base (0,0)
+        Point pDest;
+        if (this.colis != null) {
+            pDest = this.colis.getDestination();
+        } else {
+            pDest = new Point(0, 0);
+        }
+
+        //nbDeplacement correspont à la vitesse (nombre de case par secondes)
+        int nbDeplacement = this.vitesse;
+
         Point pointEnCours = this.position;
         for (int i = 0; i < nbDeplacement; i++) {
+            //Si on se trouve à l'endroit de destination du colis, on le livre
+            if(this.colis != null){
+                if (this.position.getCoordonneeX() == this.colis.getDestination().getCoordonneeX() && this.position.getCoordonneeY() == this.colis.getDestination().getCoordonneeY()){
+                    System.out.println("le colis " + this.colis.getNomColis() + " a été livré");
+                    this.colis = null;
+                }
+            }
             //On vérifie d'abord si on ne se trouve pas hors de la portée du drone
             // à faire
 
@@ -105,7 +121,7 @@ abstract public class Drones {
                 this.setBatterie(etatBatterie);
             }
         }
-        return pointEnCours;
+        this.position = pointEnCours;
     }
 
     /**

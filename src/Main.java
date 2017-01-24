@@ -1,5 +1,5 @@
 /**
- * Created by arnaudfreismuth on 23/01/2017.
+ * Created by legrosgay on 23/01/2017.
  */
 public class Main {
 
@@ -15,5 +15,6 @@ public class Main {
         Point p3 = alpha.deplacerDrone(c1.getDestination(), alpha.getVitesse());
         System.out.println(p3.getCoordonneeX());
         System.out.println(p3.getCoordonneeY());
+        System.out.println("My name is Arnaud and im so gay");
     }
 }

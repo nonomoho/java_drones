@@ -6,7 +6,7 @@ abstract public class Drones {
     private int vitesse; //en case par secondes
     private double consommation; //% perdu par déplacement
     private double batterie; //en % De 0 à 100
-    private double charge;
+    private double charge; //le poid maximal que peut supporter le drone
     private int distanceMax;
     private Point position;
     private Colis colis; //null si il n'y en a pas
@@ -87,11 +87,11 @@ abstract public class Drones {
     }
 
     /**
-     * @param pDest c'est le point de destination du drône
+     * @param pDest         c'est le point de destination du drône
      * @param nbDeplacement nombre de case que le drone peut parcourir ce tour
      * @return pointEnCours : La nouvelle position du drone
      */
-    public Point deplacerDrone(Point pDest,int nbDeplacement){
+    public Point deplacerDrone(Point pDest, int nbDeplacement) {
         Point pointEnCours = this.position;
         for (int i = 0; i < nbDeplacement; i++) {
             //On vérifie d'abord si on ne se trouve pas hors de la portée du drone
@@ -99,6 +99,19 @@ abstract public class Drones {
             pointEnCours = pointEnCours.meilleurPoint(pDest);
         }
         return pointEnCours;
+    }
+
+    /**
+     * @param colis : le colis à charger sur le drone
+     *              On vérifie si le drone a une capacité de charge suffisante pour porter le colis
+     */
+    public void chargerDrone(Colis colis) {
+        //on test si le poid du colis est inférieur à la capacité du drone
+        if (colis.getPoids() <= this.getCharge()) {
+            this.setColis(colis);
+        } else {
+            System.out.println("Le colis " + colis.getNomColis() + " est trop lourd pour le drone " + this.getNom());
+        }
     }
 
 

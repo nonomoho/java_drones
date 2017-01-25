@@ -134,6 +134,7 @@ public class Base {
     public void donnerInstructionReparation() {
         //On parcourt chaque Drone de réparation et on lui donne une instruction en fonction de son état
         for (Drones drone : this.listeDroneReparation) {
+            System.out.println(drone.getInstruction().getType());
             switch (drone.getInstruction().getType()) {
                 case EN_ATTENTE: //il est en attente (i.e. à la base sans rien à faire)
                     //On regarde si un drone est à plat
@@ -162,14 +163,23 @@ public class Base {
                     drone.seDeplacer();
                     break;
                 case RECHARGER_DRONE:
-                    for (Drones d : this.listeDroneReparation) {
-                        if (d.getPosition().equals(drone.getPosition()) && !(d.getNom().equals(drone.getNom()))){//On a trouver le drone à charger
+                    for (Drones d : this.listeDrone) {
+                        if (d.getPosition().equals(drone.getPosition()) && !(d.getNom().equals(drone.getNom()))) {//On a trouver le drone à charger
                             d.setBatterie(100);
                             System.out.println("on a chargé le drone " + d.getNom());
-                            d.setInstruction(new Instruction(Instruction.Type.RENTRER_A_LA_BASE));
+                            drone.setInstruction(new Instruction(Instruction.Type.RENTRER_A_LA_BASE));
                         }
                     }
                     break;
+                case RENTRER_A_LA_BASE:
+                    if (drone.getColis() != null) { //Il ne peut pas rentrer avec un coli, c'est à dire qu'il vient de le livrer
+                        listeColisLivre.add(drone.getColis()); // On l'ajoute donc à la liste des colis livrés
+                        drone.setColis(null); //On lui hôte le colis
+                    }
+                    drone.setDestination(new Point()); //Sa destination est la maison
+                    drone.seDeplacer();
+                    break;
+
             }
         }
     }

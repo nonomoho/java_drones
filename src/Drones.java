@@ -135,10 +135,12 @@ abstract public class Drones {
                 System.out.println("le colis " + this.colis.getNomColis() + " a bien été livré");
                 this.setInstruction(new Instruction(Instruction.Type.RENTRER_A_LA_BASE));
             }
+            //Si le drone est parti en reco
             if (this.getInstruction().getType() == Instruction.Type.PARTIR_EN_RECONNAISSANCE) {
                 System.out.println("La zone (" + this.getDestination().getCoordonneeX() + ";" + this.getDestination().getCoordonneeY() + ") a été visité");
                 this.setInstruction(new Instruction(Instruction.Type.RENTRER_A_LA_BASE));
             }
+            //Si il se trouve à l'emplacement d'un drône a réparer
             if (this.getInstruction().getType() == Instruction.Type.RETROUVER_DRONE) {
                 this.setInstruction(new Instruction(Instruction.Type.RECHARGER_DRONE));
             }

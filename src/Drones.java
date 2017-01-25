@@ -123,15 +123,25 @@ abstract public class Drones {
                 //le déplacement est effectué, la batterie diminue
                 double etatBatterie = this.getBatterie() - this.getConsommation();
                 this.setBatterie(etatBatterie);
+            } else {
+                this.setBatterie(0);
             }
         }
 
         //Si il se trouve à l'endroit de destination
         if (pointEnCours.equals(pDest)) {
+            //Si le drone doit livrer un colis
             if (this.getInstruction().getType() == Instruction.Type.LIVRER_COLIS) {
                 System.out.println("le colis " + this.colis.getNomColis() + " a bien été livré");
+                this.setInstruction(new Instruction(Instruction.Type.RENTRER_A_LA_BASE));
             }
-            this.setInstruction(new Instruction(Instruction.Type.RENTRER_A_LA_BASE));
+            if (this.getInstruction().getType() == Instruction.Type.PARTIR_EN_RECONNAISSANCE) {
+                System.out.println("La zone (" + this.getDestination().getCoordonneeX() + ";" + this.getDestination().getCoordonneeY() + ") a été visité");
+                this.setInstruction(new Instruction(Instruction.Type.RENTRER_A_LA_BASE));
+            }
+            if (this.getInstruction().getType() == Instruction.Type.RETROUVER_DRONE) {
+                this.setInstruction(new Instruction(Instruction.Type.RECHARGER_DRONE));
+            }
         }
 
         //Si il se trouve à la base et devait y retourner, on le met en attente

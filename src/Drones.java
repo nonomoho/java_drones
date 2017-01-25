@@ -113,9 +113,9 @@ abstract public class Drones {
         //Le lieu où doit aller le drone
         Point pDest = this.getDestination();
         //nbDeplacement correspont à la vitesse (nombre de case par secondes)
-        int nbDeplacement = this.vitesse;
+        int nbDeplacement = this.getVitesse();
 
-        Point pointEnCours = this.position;
+        Point pointEnCours = this.getPosition();
         for (int i = 0; i < nbDeplacement; i++) {
             //on vérifie ensuite si la batterie du drone est suffisante pour effectuer le déplacement
             if (this.getBatterie() - this.getConsommation() >= 0) {
@@ -150,6 +150,6 @@ abstract public class Drones {
         if (pointEnCours.equals(new Point()) && this.getInstruction().getType() == Instruction.Type.RENTRER_A_LA_BASE) {
             this.setInstruction(new Instruction(Instruction.Type.EN_ATTENTE));
         }
-        this.position = pointEnCours;
+        this.setPosition(pointEnCours);
     }
 }

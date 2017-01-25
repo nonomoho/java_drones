@@ -11,7 +11,7 @@ abstract public class Drones {
     private Point position; // La position du drone
     private Point destination; // La destination du drone
     private Colis colis; //null si il n'y en a pas
-    private Instruction instruction; //numéro de la tâche à accomplir
+    private Instruction instruction; //La tâche à accomplir
 
     public Drones(String nom, int vitesse, double consommation, double batterie, double charge, int distanceMax, Point position, Point destination, Colis colis, Instruction instruction) {
         this.nom = nom;

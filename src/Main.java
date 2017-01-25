@@ -11,6 +11,12 @@ public class Main {
         //Création de colis
         Point p1 = new Point(4, 6);
         Colis c1 = new Colis("colis1", p1, 2);
+        Point p2 = new Point(30, -2);
+        Colis c2 = new Colis("colis2", p2, 2);
+
+        ArrayList<Colis> listeColis = new ArrayList<Colis>();
+        listeColis.add(c1);
+        listeColis.add(c2);
 
         DronesTerrestres alpha = new DronesTransportTerrestre("Alpha");
         ArrayList<Drones> listeDroneTransport = new ArrayList<Drones>();
@@ -19,8 +25,7 @@ public class Main {
         ArrayList<Drones> listeDrones = new ArrayList<Drones>();
         listeDrones.add(alpha);
 
-        ArrayList<Colis> listeColis = new ArrayList<Colis>();
-        listeColis.add(c1);
+
 
         Base base = new Base(new ArrayList<Drones>(), listeDroneTransport, new ArrayList<Drones>(), listeDrones, listeColis, new ArrayList<Colis>());
 

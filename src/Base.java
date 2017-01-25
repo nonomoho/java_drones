@@ -87,9 +87,9 @@ public class Base {
         for (Drones drone : this.listeDroneTransport) {
             //System.out.println(drone.getInstruction());
             switch (drone.getInstruction().getType()) {
-                case EN_ATTENTE: //il est en attente (i.e. à la base sans rien à faire
+                case EN_ATTENTE: //il est en attente (i.e. à la base sans rien à faire)
                     boolean chargeEffectuee = false;
-                    if (!this.listeColisALivrer.isEmpty()) {
+                    if (!this.listeColisALivrer.isEmpty()) { // On va essayer de lui trouver un colis à livrer
                         int index = 0;
                         while (!chargeEffectuee && index <= this.listeColisALivrer.size()) {
                             if (this.listeColisALivrer.get(index).getPoids() <= drone.getCharge()) {
@@ -135,7 +135,7 @@ public class Base {
         //On parcourt chaque Drone de réparation et on lui donne une instruction en fonction de son état
         for (Drones drone : this.listeDrone) {
             switch (drone.getInstruction().getType()) {
-                case EN_ATTENTE: //il est en attente (i.e. à la base sans rien à faire
+                case EN_ATTENTE: //il est en attente (i.e. à la base sans rien à faire)
 
                     break;
             }

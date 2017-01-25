@@ -3,6 +3,6 @@
  */
 public class DronesTransportVolant extends DronesVolants {
     public DronesTransportVolant(String nom) {
-        super(nom, 3, 1.5, 100, 20, 100, new Point(0, 0), new Point(0,0), null, 0, false);
+        super(nom, 3, 1.5, 100, 20, 100, new Point(0, 0), new Point(0,0), null,  new Instruction(Instruction.Type.EN_ATTENTE), false);
     }
 }

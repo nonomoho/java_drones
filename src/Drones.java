@@ -121,8 +121,8 @@ abstract public class Drones {
             if (this.getBatterie() - this.getConsommation() >= 0) {
                 pointEnCours = pointEnCours.meilleurPoint(pDest);
                 //le déplacement est effectué, la batterie diminue
-                //******//double etatBatterie = this.getBatterie() - this.getConsommation();
-                //this.setBatterie(etatBatterie);
+                double etatBatterie = this.getBatterie() - this.getConsommation();
+                this.setBatterie(etatBatterie);
             }
         }
 

@@ -14,6 +14,7 @@ public class Instruction {
         RENTRER_A_LA_BASE,
         LIVRER_COLIS,
         PARTIR_EN_RECONNAISSANCE,
+        RETROUVER_DRONE,
         RECHARGER_DRONE
     }
 

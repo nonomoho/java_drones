@@ -133,10 +133,42 @@ public class Base {
 
     public void donnerInstructionReparation() {
         //On parcourt chaque Drone de réparation et on lui donne une instruction en fonction de son état
-        for (Drones drone : this.listeDrone) {
+        for (Drones drone : this.listeDroneReparation) {
             switch (drone.getInstruction().getType()) {
                 case EN_ATTENTE: //il est en attente (i.e. à la base sans rien à faire)
+                    //On regarde si un drone est à plat
+                    boolean enAttente = false;
+                    int parcoursTransport = 0;
+                    int parcoursReco = 0;
 
+                    while (!enAttente && (!(parcoursTransport >= listeDroneTransport.size()) || !(parcoursReco >= listeDroneReconnaissance.size()))) {
+                        Drones dTransport = listeDroneTransport.get(parcoursTransport);
+                        if (dTransport.getBatterie() == 0) {
+                            drone.setDestination(dTransport.getPosition());
+                            drone.setInstruction(new Instruction(Instruction.Type.RETROUVER_DRONE));
+                            enAttente = true;
+                        }
+                        Drones dReco = listeDroneReconnaissance.get(parcoursReco);
+                        if (dReco.getBatterie() == 0) {
+                            drone.setDestination(dReco.getPosition());
+                            drone.setInstruction(new Instruction(Instruction.Type.RETROUVER_DRONE));
+                            enAttente = true;
+                        }
+                        parcoursTransport += 1;
+                        parcoursReco += 1;
+                    }
+                    break;
+                case RETROUVER_DRONE: //il est en route vers un drone HS
+                    drone.seDeplacer();
+                    break;
+                case RECHARGER_DRONE:
+                    for (Drones d : this.listeDroneReparation) {
+                        if (d.getPosition().equals(drone.getPosition()) && !(d.getNom().equals(drone.getNom()))){//On a trouver le drone à charger
+                            d.setBatterie(100);
+                            System.out.println("on a chargé le drone " + d.getNom());
+                            d.setInstruction(new Instruction(Instruction.Type.RENTRER_A_LA_BASE));
+                        }
+                    }
                     break;
             }
         }

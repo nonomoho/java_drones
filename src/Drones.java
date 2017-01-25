@@ -11,9 +11,9 @@ abstract public class Drones {
     private Point position; // La position du drone
     private Point destination; // La destination du drone
     private Colis colis; //null si il n'y en a pas
-    private int instruction; //numéro de la tâche à accomplir
+    private Instruction instruction; //numéro de la tâche à accomplir
 
-    public Drones(String nom, int vitesse, double consommation, double batterie, double charge, int distanceMax, Point position, Point destination, Colis colis, int instruction) {
+    public Drones(String nom, int vitesse, double consommation, double batterie, double charge, int distanceMax, Point position, Point destination, Colis colis, Instruction instruction) {
         this.nom = nom;
         this.vitesse = vitesse;
         this.consommation = consommation;
@@ -98,11 +98,11 @@ abstract public class Drones {
         this.destination = destination;
     }
 
-    public int getInstruction() {
+    public Instruction getInstruction() {
         return instruction;
     }
 
-    public void setInstruction(int instruction) {
+    public void setInstruction(Instruction instruction) {
         this.instruction = instruction;
     }
 
@@ -127,16 +127,16 @@ abstract public class Drones {
         }
 
         //Si il se trouve à l'endroit de destination
-        if (pointEnCours.equals(pDest)){
-            if (this.getInstruction() == Instruction.LIVRER_COLIS){
+        if (pointEnCours.equals(pDest)) {
+            if (this.getInstruction().getType() == Instruction.Type.LIVRER_COLIS) {
                 System.out.println("le colis " + this.colis.getNomColis() + " a bien été livré");
             }
-            this.setInstruction(Instruction.RENTRER_A_LA_BASE);
+            this.setInstruction(new Instruction(Instruction.Type.RENTRER_A_LA_BASE));
         }
 
         //Si il se trouve à la base et devait y retourner, on le met en attente
-        if (pointEnCours.equals(new Point()) && this.getInstruction() == Instruction.RENTRER_A_LA_BASE){
-            this.setInstruction(Instruction.EN_ATTENTE);
+        if (pointEnCours.equals(new Point()) && this.getInstruction().getType() == Instruction.Type.RENTRER_A_LA_BASE) {
+            this.setInstruction(new Instruction(Instruction.Type.EN_ATTENTE));
         }
         this.position = pointEnCours;
     }

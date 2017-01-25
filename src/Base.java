@@ -74,8 +74,8 @@ public class Base {
     public void donnerInstructionReconnaissance() {
         //On parcourt chaque Drone de reconnaissance et on lui donne une instruction en fonction de son état
         for (Drones drone : this.listeDrone) {
-            switch (drone.getInstruction()) {
-                case Instruction.EN_ATTENTE: //il est en attente (i.e. à la base sans rien à faire
+            switch (drone.getInstruction().getType()) {
+                case EN_ATTENTE: //il est en attente (i.e. à la base sans rien à faire
 
                     break;
             }
@@ -86,8 +86,8 @@ public class Base {
         //On parcourt chaque Drone de transport et on lui donne une instruction en fonction de son état
         for (Drones drone : this.listeDroneTransport) {
             //System.out.println(drone.getInstruction());
-            switch (drone.getInstruction()) {
-                case Instruction.EN_ATTENTE: //il est en attente (i.e. à la base sans rien à faire
+            switch (drone.getInstruction().getType()) {
+                case EN_ATTENTE: //il est en attente (i.e. à la base sans rien à faire
                     boolean chargeEffectuee = false;
                     if (!this.listeColisALivrer.isEmpty()) {
                         int index = 0;
@@ -96,23 +96,23 @@ public class Base {
                                 drone.setColis(this.listeColisALivrer.get(index)); //on lui donne un colis
                                 listeColisALivrer.remove(index);
                                 chargeEffectuee = true;
-                                drone.setInstruction(Instruction.LIVRER_COLIS);
+                                drone.setInstruction(new Instruction(Instruction.Type.LIVRER_COLIS));
                             }
                             index += 1;
                         }
                     }
-                    if (!chargeEffectuee){ //Aucun colis ne lui correspond, il va partir en reco (un point aléatoire)
+                    if (!chargeEffectuee) { //Aucun colis ne lui correspond, il va partir en reco (un point aléatoire)
                         Random random = new Random();
                         int max = drone.getDistanceMax();
-                        int xAleatoire = random.nextInt(2*max + 1) - max;
-                        int yAleatoire = random.nextInt(2*max + 1) - max;
+                        int xAleatoire = random.nextInt(2 * max + 1) - max;
+                        int yAleatoire = random.nextInt(2 * max + 1) - max;
                         drone.setDestination(new Point(xAleatoire, yAleatoire));
-                        drone.setInstruction(Instruction.PARTIR_EN_RECONNAISSANCE);
+                        drone.setInstruction(new Instruction(Instruction.Type.PARTIR_EN_RECONNAISSANCE));
                     }
                     break;
 
-                case Instruction.RENTRER_A_LA_BASE:
-                    if (drone.getColis() != null){ //Il ne peut pas rentrer avec un coli, c'est à dire qu'il vient de le livrer
+                case RENTRER_A_LA_BASE:
+                    if (drone.getColis() != null) { //Il ne peut pas rentrer avec un coli, c'est à dire qu'il vient de le livrer
                         listeColisLivre.add(drone.getColis()); // On l'ajoute donc à la liste des colis livrés
                         drone.setColis(null); //On lui hôte le colis
                     }
@@ -120,12 +120,12 @@ public class Base {
                     drone.seDeplacer();
                     break;
 
-                case Instruction.LIVRER_COLIS:
+                case LIVRER_COLIS:
                     drone.setDestination(drone.getColis().getDestination());
                     drone.seDeplacer();
                     break;
 
-                case Instruction.PARTIR_EN_RECONNAISSANCE:
+                case PARTIR_EN_RECONNAISSANCE:
                     drone.seDeplacer();
             }
         }
@@ -134,8 +134,8 @@ public class Base {
     public void donnerInstructionReparation() {
         //On parcourt chaque Drone de réparation et on lui donne une instruction en fonction de son état
         for (Drones drone : this.listeDrone) {
-            switch (drone.getInstruction()) {
-                case Instruction.EN_ATTENTE: //il est en attente (i.e. à la base sans rien à faire
+            switch (drone.getInstruction().getType()) {
+                case EN_ATTENTE: //il est en attente (i.e. à la base sans rien à faire
 
                     break;
             }

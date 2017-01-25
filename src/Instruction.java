@@ -3,9 +3,22 @@
  */
 public class Instruction {
 
-    public static final int EN_ATTENTE = 0;
-    public static final int RENTRER_A_LA_BASE = 2;
-    public static final int LIVRER_COLIS = 3;
-    public static final int PARTIR_EN_RECONNAISSANCE = 4;
-    public static final int RECHARGER_DRONE = 5;
+    private final Type type;
+
+    public Instruction(Type type) {
+        this.type = type;
+    }
+
+    public enum Type {
+        EN_ATTENTE,
+        RENTRER_A_LA_BASE,
+        LIVRER_COLIS,
+        PARTIR_EN_RECONNAISSANCE,
+        RECHARGER_DRONE
+    }
+
+
+    public Type getType() {
+        return type;
+    }
 }

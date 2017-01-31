@@ -106,6 +106,9 @@ abstract public class Drones {
         this.instruction = instruction;
     }
 
+    public void seRecharger(){
+        this.setBatterie(100);
+    }
     /**
      * Déplace le drone
      */
@@ -135,10 +138,12 @@ abstract public class Drones {
                 System.out.println("le colis " + this.colis.getNomColis() + " a bien été livré");
                 this.setInstruction(new Instruction(Instruction.Type.RENTRER_A_LA_BASE));
             }
+            //Si le drone est parti en reco
             if (this.getInstruction().getType() == Instruction.Type.PARTIR_EN_RECONNAISSANCE) {
                 System.out.println("La zone (" + this.getDestination().getCoordonneeX() + ";" + this.getDestination().getCoordonneeY() + ") a été visité");
                 this.setInstruction(new Instruction(Instruction.Type.RENTRER_A_LA_BASE));
             }
+            //Si il se trouve à l'emplacement d'un drône a réparer
             if (this.getInstruction().getType() == Instruction.Type.RETROUVER_DRONE) {
                 this.setInstruction(new Instruction(Instruction.Type.RECHARGER_DRONE));
             }
@@ -146,6 +151,9 @@ abstract public class Drones {
 
         //Si il se trouve à la base et devait y retourner, on le met en attente
         if (pointEnCours.equals(new Point()) && this.getInstruction().getType() == Instruction.Type.RENTRER_A_LA_BASE) {
+            //Une fois à la base, il se recharge automatiquement
+            this.seRecharger();
+            System.out.println("Je suis à la base et je me recharge");
             this.setInstruction(new Instruction(Instruction.Type.EN_ATTENTE));
         }
         this.setPosition(pointEnCours);

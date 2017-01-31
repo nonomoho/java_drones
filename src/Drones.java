@@ -106,6 +106,10 @@ abstract public class Drones {
         this.instruction = instruction;
     }
 
+    public String toStringNom() {
+        return nom;
+    }
+
     public void seRecharger(){
         this.setBatterie(100);
     }

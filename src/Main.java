@@ -6,6 +6,16 @@ import java.util.Random;
  */
 
 public class Main {
+
+    public static void afficherInfoDrone(Drones d) {
+        System.out.println("##########");
+        System.out.println(d.getNom());
+        System.out.println("état de la batterie : " + d.getBatterie());
+        System.out.println("position x : " + d.getPosition().getCoordonneeX());
+        System.out.println("position y : " + d.getPosition().getCoordonneeY());
+
+    }
+
     public static void main(String[] args) {
 
         //Création de colis
@@ -43,21 +53,17 @@ public class Main {
         listeDrones.add(repartout);
 
 
-
         Base base = new Base(listeDroneReconnaissance, listeDroneTransport, listeDroneReparation, listeDrones, listeColis, new ArrayList<Colis>());
 
         for (int i = 0; i < 200; i++) {
+
+
             base.donnerInstructionTransport();
             base.donnerInstructionReparation();
-            System.out.println("Alpha" + i);
-            System.out.println(alpha.getBatterie());
-            System.out.println(repartout.getPosition().getCoordonneeX());
-            System.out.println(repartout.getPosition().getCoordonneeY());
-            //System.out.println(alpha.getPosition().getCoordonneeX());
-            //System.out.println(alpha.getPosition().getCoordonneeY());
-            //System.out.println("Beta" + i);
-            //System.out.println(beta.getPosition().getCoordonneeX());
-            //System.out.println(beta.getPosition().getCoordonneeY());
+            System.out.println(i);
+            afficherInfoDrone(alpha);
+            afficherInfoDrone(beta);
+            afficherInfoDrone(repartout);
         }
 
 

@@ -1,4 +1,3 @@
-
 /**
  * Classe representant les drones WarMachine
  *
@@ -7,18 +6,6 @@
 
 public class WarMachine {
 
-    /**
-     * Current position
-     */
-    protected String position;
-    /**
-     * The battery
-     */
-    protected int power;
-    /**
-     * The type
-     */
-    protected String type;
     /**
      * The speed
      */
@@ -35,6 +22,18 @@ public class WarMachine {
      * The battery consumption for the gun
      */
     private static int gunConsumption = 30;
+    /**
+     * Current position
+     */
+    protected String position;
+    /**
+     * The battery
+     */
+    protected int power;
+    /**
+     * The type
+     */
+    protected String type;
 
 
     /**
@@ -53,8 +52,50 @@ public class WarMachine {
      */
     public WarMachine(String position) {
         this.type = "War Machine";
-        this.position = "<0;0>";
+        this.position = position;
         this.power = 100;
+    }
+
+    /**
+     * @return the speed
+     */
+    public static int getSpeed() {
+        return WarMachine.speed;
+    }
+
+    /**
+     * @param speed the speed to set
+     */
+    public static void setSpeed(int speed) {
+        WarMachine.speed = speed;
+    }
+
+    /**
+     * @return the transmittingDistance
+     */
+    public static int getTransmittingDistance() {
+        return WarMachine.transmittingDistance;
+    }
+
+    /**
+     * @param transmittingDistance the transmittingDistance to set
+     */
+    public static void setTransmittingDistance(int transmittingDistance) {
+        WarMachine.transmittingDistance = transmittingDistance;
+    }
+
+    /**
+     * @return the consumption
+     */
+    public static int getConsumption() {
+        return WarMachine.consumption;
+    }
+
+    /**
+     * @param consumption the consumption to set
+     */
+    public static void setConsumption(int consumption) {
+        WarMachine.consumption = consumption;
     }
 
     /**
@@ -100,53 +141,10 @@ public class WarMachine {
     }
 
     /**
-     * @return the speed
-     */
-    public static int getSpeed() {
-        return WarMachine.speed;
-    }
-
-    /**
-     * @param speed the speed to set
-     */
-    public static void setSpeed(int speed) {
-        WarMachine.speed = speed;
-    }
-
-    /**
-     * @return the transmittingDistance
-     */
-    public static int getTransmittingDistance() {
-        return WarMachine.transmittingDistance;
-    }
-
-    /**
-     * @param transmittingDistance the transmittingDistance to set
-     */
-    public static void setTransmittingDistance(int transmittingDistance) {
-        WarMachine.transmittingDistance = transmittingDistance;
-    }
-
-    /**
-     * @return the consumption
-     */
-    public static int getConsumption() {
-        return WarMachine.consumption;
-    }
-
-    /**
-     * @param consumption the consumption to set
-     */
-    public static void setConsumption(int consumption) {
-        WarMachine.consumption = consumption;
-    }
-
-
-    /**
      * Allow to attack a position
      *
      * @param target the position
-     * @param drone  the Object representing the target located at the position
+     * @param o  the Object representing the target located at the position
      */
     public void attack(String target, Object o) {
         // The WarMachine goes to the position
@@ -155,8 +153,6 @@ public class WarMachine {
             // The target's battery is discharged
             this.power = this.power - WarMachine.gunConsumption;
         }
-
-
     }
 
     /**

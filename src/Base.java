@@ -72,12 +72,50 @@ public class Base {
     }
 
     public void donnerInstructionReconnaissance() {
-        //On parcourt chaque Drone de reconnaissance et on lui donne une instruction en fonction de son état
-        for (Drones drone : this.listeDrone) {
+        //On parcourt chaque Drone de transport et on lui donne une instruction en fonction de son état
+        for (Drones drone : this.listeDroneReconnaissance) {
+            //System.out.println(drone.getInstruction());
             switch (drone.getInstruction().getType()) {
-                case EN_ATTENTE: //il est en attente (i.e. à la base sans rien à faire
-
+                case EN_ATTENTE: //il est en attente (i.e. à la base sans rien à faire)
+                    boolean chargeEffectuee = false;
+                    if (!this.listeColisALivrer.isEmpty()) { // On va essayer de lui trouver un colis à livrer
+                        int index = 0;
+                        while (!chargeEffectuee && index <= this.listeColisALivrer.size()) {
+                            if (this.listeColisALivrer.get(index).getPoids() <= drone.getCharge()) {
+                                drone.setColis(this.listeColisALivrer.get(index)); //on lui donne un colis
+                                listeColisALivrer.remove(index);
+                                chargeEffectuee = true;
+                                drone.setInstruction(new Instruction(Instruction.Type.LIVRER_COLIS));
+                            }
+                            index += 1;
+                        }
+                    }
+                    if (!chargeEffectuee) { //Aucun colis ne lui correspond, il va partir en reco (un point aléatoire)
+                        Random random = new Random();
+                        int max = drone.getDistanceMax();
+                        int xAleatoire = random.nextInt(2 * max + 1) - max;
+                        int yAleatoire = random.nextInt(2 * max + 1) - max;
+                        drone.setDestination(new Point(xAleatoire, yAleatoire));
+                        drone.setInstruction(new Instruction(Instruction.Type.PARTIR_EN_RECONNAISSANCE));
+                    }
                     break;
+
+                case RENTRER_A_LA_BASE:
+                    if (drone.getColis() != null) { //Il ne peut pas rentrer avec un coli, c'est à dire qu'il vient de le livrer
+                        listeColisLivre.add(drone.getColis()); // On l'ajoute donc à la liste des colis livrés
+                        drone.setColis(null); //On lui hôte le colis
+                    }
+                    drone.setDestination(new Point()); //Sa destination est la maison
+                    drone.seDeplacer();
+                    break;
+
+                case LIVRER_COLIS:
+                    drone.setDestination(drone.getColis().getDestination());
+                    drone.seDeplacer();
+                    break;
+
+                case PARTIR_EN_RECONNAISSANCE:
+                    drone.seDeplacer();
             }
         }
     }
@@ -143,17 +181,21 @@ public class Base {
                     int parcoursReco = 0;
 
                     while (!enAttente && (!(parcoursTransport >= listeDroneTransport.size()) || !(parcoursReco >= listeDroneReconnaissance.size()))) {
-                        Drones dTransport = listeDroneTransport.get(parcoursTransport);
-                        if (dTransport.getBatterie() == 0) {
-                            drone.setDestination(dTransport.getPosition());
-                            drone.setInstruction(new Instruction(Instruction.Type.RETROUVER_DRONE));
-                            enAttente = true;
+                        if (parcoursTransport < listeDroneTransport.size()) {
+                            Drones dTransport = listeDroneTransport.get(parcoursTransport);
+                            if (dTransport.getBatterie() == 0) {
+                                drone.setDestination(dTransport.getPosition());
+                                drone.setInstruction(new Instruction(Instruction.Type.RETROUVER_DRONE));
+                                enAttente = true;
+                            }
                         }
-                        Drones dReco = listeDroneReconnaissance.get(parcoursReco);
-                        if (dReco.getBatterie() == 0) {
-                            drone.setDestination(dReco.getPosition());
-                            drone.setInstruction(new Instruction(Instruction.Type.RETROUVER_DRONE));
-                            enAttente = true;
+                        if (parcoursReco < listeDroneReconnaissance.size()) {
+                            Drones dReco = listeDroneReconnaissance.get(parcoursReco);
+                            if (dReco.getBatterie() == 0) {
+                                drone.setDestination(dReco.getPosition());
+                                drone.setInstruction(new Instruction(Instruction.Type.RETROUVER_DRONE));
+                                enAttente = true;
+                            }
                         }
                         parcoursTransport += 1;
                         parcoursReco += 1;

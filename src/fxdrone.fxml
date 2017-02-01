@@ -1,19 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.ScatterChart?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
-<GridPane alignment="CENTER" gridLinesVisible="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.87" prefHeight="262.0" prefWidth="441.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
     <columnConstraints>
-        <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="387.0" minWidth="10.0" prefWidth="387.0" />
-        <ColumnConstraints hgrow="SOMETIMES" maxWidth="216.0" minWidth="10.0" prefWidth="54.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="120.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="491.0" minWidth="10.0" prefWidth="480.0" />
     </columnConstraints>
     <rowConstraints>
-        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="78.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="352.0" minHeight="10.0" prefHeight="352.0" vgrow="SOMETIMES" />
+        <RowConstraints maxHeight="334.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="127.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
     </rowConstraints>
     <children>
-      <ChoiceBox fx:id="boxListeDrone" prefWidth="150.0" />
+        <ChoiceBox fx:id="boxListeDrone" prefWidth="150.0" />
+      <Button mnemonicParsing="false" onAction="#getValueChoixBox" text="Button" GridPane.rowIndex="1" />
+      <Button mnemonicParsing="false" onAction="#lancerSimulation" text="lancer l'application" GridPane.columnIndex="1" />
+      <ScatterChart fx:id="myChart" horizontalGridLinesVisible="false" verticalGridLinesVisible="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <xAxis>
+          <NumberAxis autoRanging="false" label="X" lowerBound="-100.0" minorTickCount="1" minorTickLength="10.0" side="BOTTOM" tickUnit="10.0">
+               <tickLabelFont>
+                  <Font name="System Italic" size="8.0" />
+               </tickLabelFont></NumberAxis>
+        </xAxis>
+        <yAxis>
+          <NumberAxis autoRanging="false" label="Y" lowerBound="-100.0" minorTickCount="1" minorTickLength="10.0" side="LEFT" tickUnit="10.0">
+               <tickLabelFont>
+                  <Font name="System Italic" size="8.0" />
+               </tickLabelFont></NumberAxis>
+        </yAxis>
+      </ScatterChart>
     </children>
 </GridPane>

@@ -1,7 +1,9 @@
+import java.util.Observable;
+
 /**
  * Created by arnaudfreismuth on 18/01/2017.
  */
-abstract public class Drones {
+abstract public class Drones extends Observable {
     private String nom;
     private int vitesse; //en case par secondes
     private double consommation; //% perdu par déplacement
@@ -80,6 +82,8 @@ abstract public class Drones {
 
     public void setPosition(Point position) {
         this.position = position;
+        setChanged();
+        notifyObservers(this.position);
     }
 
     public Colis getColis() {
@@ -106,13 +110,14 @@ abstract public class Drones {
         this.instruction = instruction;
     }
 
-    public String toStringNom() {
+    public String toString() {
         return nom;
     }
 
-    public void seRecharger(){
+    public void seRecharger() {
         this.setBatterie(100);
     }
+
     /**
      * Déplace le drone
      */

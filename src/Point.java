@@ -1,3 +1,5 @@
+import javafx.scene.chart.NumberAxis;
+
 /**
  * Created by arnaudfreismuth on 18/01/2017.
  */
